@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+  <rect width="800" height="500" fill="#16120c"/>
+  <g fill="#d4af5b" fill-opacity="0.14">
+    <polygon points="0,380 180,140 360,380"/>
+    <polygon points="220,400 470,80 720,400"/>
+    <polygon points="500,410 680,180 860,410"/>
+  </g>
+  <g fill="none" stroke="#f6f1e6" stroke-opacity="0.12">
+    <path d="M0 430 Q 200 390 400 430 T 800 430"/>
+    <path d="M0 460 Q 200 430 400 460 T 800 460"/>
+  </g>
+</svg>

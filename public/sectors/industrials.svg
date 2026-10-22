@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice">
+  <rect width="800" height="500" fill="#10140f"/>
+  <g fill="#d4af5b" fill-opacity="0.18">
+    <polygon points="80,420 180,180 280,420"/>
+    <polygon points="260,420 390,90 520,420"/>
+    <polygon points="500,420 640,210 760,420"/>
+  </g>
+  <line x1="0" y1="420" x2="800" y2="420" stroke="#f6f1e6" stroke-opacity="0.2"/>
+</svg>
