@@ -13,7 +13,7 @@ export default function AlumniPage() {
       <PageHero
         kicker="Alumni placements"
         title="Where the desk sends people next."
-        lede="Initial full-time seats after SIF span bulge-bracket banking, elite boutiques, Canadian pensions, asset management, consulting, and industry. Drop logo files into public/logos to replace the wordmarks."
+        lede="Initial full-time seats after SIF span bulge-bracket banking, elite boutiques, Canadian pensions, asset management, consulting, and industry."
       />
 
       <section className="bg-paper text-navy">
@@ -29,9 +29,7 @@ export default function AlumniPage() {
             ))}
           </div>
           <p className="mt-8 text-center text-sm text-navy/50">
-            Add a transparent PNG or SVG named to match each firm in{" "}
-            <code className="text-navy">public/logos</code> and the wordmark
-            becomes a logo automatically.
+            A selection of initial full-time placements. Not exhaustive.
           </p>
         </div>
       </section>

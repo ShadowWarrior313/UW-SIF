@@ -1,6 +1,7 @@
 import Link from "next/link";
+import { Instagram, Linkedin } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
-import { contact, navLinks, site } from "@/data/nav";
+import { contact, navLinks, site, socialLinks } from "@/data/nav";
 import { sectors } from "@/data/sectors";
 
 const fundLinks = [
@@ -37,6 +38,18 @@ export default function Footer() {
             <br />
             {contact.city}
           </p>
+          <div className="mt-6 flex gap-3">
+            {socialLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="flex h-9 w-9 items-center justify-center border border-white/15 text-cream/70 transition hover:border-gold hover:text-gold"
+                aria-label={link.label}
+              >
+                {link.label === "Instagram" ? <Instagram size={16} /> : <Linkedin size={16} />}
+              </a>
+            ))}
+          </div>
         </div>
 
         <FooterCol title="The Fund" links={fundLinks} />

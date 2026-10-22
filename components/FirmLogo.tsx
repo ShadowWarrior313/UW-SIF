@@ -14,22 +14,22 @@ export default function FirmLogo({
   const onDark = variant === "dark";
 
   return (
-    <span className="relative flex h-12 w-[10.5rem] items-center justify-center">
+    <span className="relative flex h-12 w-[11.5rem] items-center justify-center">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`/logos/${firm.logo}`}
-        alt={firm.name}
-        className={`max-h-10 max-w-[9.5rem] object-contain ${
-          ok ? "opacity-100" : "opacity-0"
-        } ${onDark ? "brightness-0 invert" : "opacity-80 grayscale hover:opacity-100 hover:grayscale-0"}`}
+        alt={ok ? firm.name : ""}
+        className={`max-h-10 max-w-[10.5rem] object-contain ${
+          ok ? "block" : "hidden"
+        } ${onDark ? "brightness-0 invert" : "opacity-90 grayscale transition hover:opacity-100 hover:grayscale-0"}`}
         onLoad={() => setOk(true)}
         onError={(event) => {
-          event.currentTarget.style.display = "none";
+          event.currentTarget.removeAttribute("src");
         }}
       />
       {!ok ? (
         <span
-          className={`absolute inset-0 flex items-center justify-center px-1 text-center font-serif text-[0.95rem] leading-none tracking-tight whitespace-nowrap ${
+          className={`px-1 text-center font-serif text-[0.95rem] leading-none tracking-tight whitespace-nowrap ${
             onDark ? "text-cream/90" : "text-navy/80"
           }`}
         >

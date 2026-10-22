@@ -36,14 +36,14 @@ export default function Header() {
           <BrandMark className="h-9" />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex">
           {navLinks.map((link) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative text-[0.78rem] font-medium uppercase tracking-[0.18em] transition-colors ${
+                className={`relative text-[0.72rem] font-medium uppercase tracking-[0.16em] transition-colors ${
                   active ? "text-gold" : "text-cream/80 hover:text-cream"
                 }`}
               >
@@ -54,16 +54,13 @@ export default function Header() {
               </Link>
             );
           })}
-        </nav>
-
-        <div className="hidden lg:block">
           <Link
             href={applyLink.href}
-            className="border border-gold px-5 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-gold transition hover:bg-gold hover:text-navy"
+            className="border border-gold px-4 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-gold transition hover:bg-gold hover:text-navy"
           >
             {applyLink.label}
           </Link>
-        </div>
+        </nav>
 
         <button
           type="button"
