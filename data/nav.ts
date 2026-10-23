@@ -1,10 +1,13 @@
 export const navLinks = [
-  { href: "/about", label: "About" },
-  { href: "/portfolio", label: "Portfolio" },
+  { href: "/about", label: "Who We Are" },
   { href: "/team", label: "Team" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "/alumni", label: "Alumni" },
   { href: "/partners", label: "Partners" },
 ] as const;
+
+/** Term currently open for applications; shown on Home, Apply, and the footer */
+export const applicationTerm = "Summer 2027";
 
 export const applyLink = {
   href: "/apply",
@@ -14,9 +17,14 @@ export const applyLink = {
 };
 
 export const socialLinks = [
-  { href: "https://www.linkedin.com/school/uwaterloo-accounting-and-finance/", label: "LinkedIn" },
-  { href: "https://www.instagram.com/uwaterloo/", label: "Instagram" },
-];
+  {
+    href: "https://www.linkedin.com/school/uwaterloo-accounting-and-finance/",
+    label: "LinkedIn",
+    icon: "linkedin",
+  },
+  { href: "https://www.instagram.com/uwaterloo/", label: "Instagram", icon: "instagram" },
+  { href: "https://www.facebook.com/uwaterloo", label: "Facebook", icon: "facebook" },
+] as const;
 
 export const contact = {
   school: "School of Accounting and Finance",
@@ -32,5 +40,4 @@ export const site = {
   short: "SIF",
   university: "University of Waterloo",
   school: "School of Accounting and Finance",
-  tagline: "Real capital. Institutional process. Waterloo talent.",
 };

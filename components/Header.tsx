@@ -5,96 +5,96 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
+import Button from "@/components/Button";
 import { applyLink, navLinks } from "@/data/nav";
+
+/** Pages whose hero photo runs under a transparent header */
+const OVERLAY_PAGES = ["/", "/about"];
 
 export default function Header() {
   const pathname = usePathname();
+  // Remember which page the menu was opened on so navigating closes it
+  const [openOn, setOpenOn] = useState<string | null>(null);
+  const open = openOn === pathname;
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+
+  const overlay = OVERLAY_PAGES.includes(pathname);
+  const clear = overlay && !scrolled && !open;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 12);
+    if (!overlay) return;
+    const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  }, [overlay]);
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 border-t-2 border-gold transition-all duration-300 ${
-        scrolled || open
-          ? "border-b border-white/10 bg-navy/90 backdrop-blur-md"
-          : "border-b border-transparent bg-transparent"
-      }`}
+      className={`top-0 z-50 transition-colors duration-300 ${
+        overlay ? "fixed inset-x-0" : "sticky"
+      } ${clear ? "bg-transparent" : "border-b border-line bg-paper/95 backdrop-blur"}`}
     >
-      <div className="mx-auto flex h-[4.5rem] max-w-7xl items-center justify-between px-6">
-        <Link href="/" aria-label="Student Investment Fund home" className="h-9">
-          <BrandMark className="h-9" />
+      <div className="mx-auto grid h-24 max-w-7xl grid-cols-[1fr_auto] items-center px-6 lg:grid-cols-[1fr_auto_1fr] lg:px-8">
+        <Link href="/" aria-label="Student Investment Fund home" className="justify-self-start">
+          <BrandMark inverted={clear} className="h-8 sm:h-9" />
         </Link>
 
-        <nav className="hidden items-center gap-8 lg:flex">
+        <nav className="hidden items-center gap-9 lg:flex">
           {navLinks.map((link) => {
             const active = pathname === link.href || pathname.startsWith(`${link.href}/`);
+            const tone = clear
+              ? active
+                ? "text-white"
+                : "text-white/85 hover:text-white"
+              : active
+                ? "text-navy"
+                : "text-ink/70 hover:text-ink";
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative text-[0.78rem] font-medium uppercase tracking-[0.18em] transition-colors ${
-                  active ? "text-gold" : "text-cream/80 hover:text-cream"
-                }`}
+                aria-current={active ? "page" : undefined}
+                className={`text-[0.95rem] font-medium transition-colors ${tone}`}
               >
                 {link.label}
-                {active ? (
-                  <span className="absolute -bottom-2 left-0 h-px w-full bg-gold" />
-                ) : null}
               </Link>
             );
           })}
         </nav>
 
-        <div className="hidden lg:block">
-          <Link
-            href={applyLink.href}
-            className="border border-gold px-5 py-2 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-gold transition hover:bg-gold hover:text-navy"
-          >
-            {applyLink.label}
-          </Link>
+        <div className="hidden justify-self-end lg:block">
+          <Button href={applyLink.href} variant={clear ? "light" : "primary"}>
+            Apply to SIF
+          </Button>
         </div>
 
         <button
           type="button"
-          className="text-cream lg:hidden"
-          onClick={() => setOpen((v) => !v)}
+          className={`justify-self-end lg:hidden ${clear ? "text-white" : "text-navy"}`}
+          onClick={() => setOpenOn(open ? null : pathname)}
           aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
         >
-          {open ? <X size={22} /> : <Menu size={22} />}
+          {open ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {open ? (
-        <div className="border-t border-white/10 bg-navy px-6 py-6 lg:hidden">
-          <nav className="flex flex-col gap-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-sm uppercase tracking-[0.18em] text-cream/80"
-              >
-                {link.label}
-              </Link>
-            ))}
+        <nav className="border-t border-line bg-paper px-6 py-4 lg:hidden">
+          {navLinks.map((link) => (
             <Link
-              href={applyLink.href}
-              className="mt-2 border border-gold px-4 py-3 text-center text-sm uppercase tracking-[0.18em] text-gold"
+              key={link.href}
+              href={link.href}
+              className="block border-b border-line py-3 text-base text-ink"
             >
-              {applyLink.label}
+              {link.label}
             </Link>
-          </nav>
-        </div>
+          ))}
+          <Button href={applyLink.href} className="mt-4 w-full justify-center">
+            Apply to SIF
+          </Button>
+        </nav>
       ) : null}
     </header>
   );

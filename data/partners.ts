@@ -26,7 +26,7 @@ export const advisoryBoard: Person[] = [
     role: "Portfolio Manager",
     org: "Independent Accountants' Investment Counsel Inc.",
   },
-  { name: "Blake Phillips", role: "Director", org: "School of Accounting and Finance, University of Waterloo" },
+  { name: "Adam Vitalis", role: "Director", org: "School of Accounting and Finance, University of Waterloo" },
   { name: "Ranjini Jha", role: "Professor", org: "School of Accounting and Finance, University of Waterloo" },
 ];
 

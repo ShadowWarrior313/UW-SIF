@@ -17,6 +17,7 @@ export type Sector = {
 /**
  * Sector coverage and placeholder holdings.
  * Replace tickers, names, and weights with the live book when ready.
+ * Tile photos go in /public/sectors as <id>.jpg; a navy block shows until then.
  */
 export const sectors: Sector[] = [
   {
@@ -25,7 +26,7 @@ export const sectors: Sector[] = [
     short: "TMT",
     description:
       "Software, semiconductors, internet platforms, and communications infrastructure across North America.",
-    image: "/sectors/tmt.svg",
+    image: "/sectors/tmt.jpg",
     weight: "18%",
     holdings: [
       { ticker: "SHOP", name: "Shopify", region: "Canada" },
@@ -39,7 +40,7 @@ export const sectors: Sector[] = [
     short: "Financials",
     description:
       "Banks, asset managers, exchanges, and diversified financials with durable franchises.",
-    image: "/sectors/financials.svg",
+    image: "/sectors/financials.jpg",
     weight: "16%",
     holdings: [
       { ticker: "RY", name: "Royal Bank of Canada", region: "Canada" },
@@ -53,7 +54,7 @@ export const sectors: Sector[] = [
     short: "Consumer",
     description:
       "Retail, branded goods, and consumer services with pricing power and repeat demand.",
-    image: "/sectors/consumer.svg",
+    image: "/sectors/consumer.jpg",
     weight: "14%",
     holdings: [
       { ticker: "COST", name: "Costco", region: "United States" },
@@ -67,7 +68,7 @@ export const sectors: Sector[] = [
     short: "Healthcare",
     description:
       "Managed care, medical devices, and life sciences with long-duration cash flows.",
-    image: "/sectors/healthcare.svg",
+    image: "/sectors/healthcare.jpg",
     weight: "12%",
     holdings: [
       { ticker: "UNH", name: "UnitedHealth", region: "United States" },
@@ -81,7 +82,7 @@ export const sectors: Sector[] = [
     short: "Industrials",
     description:
       "Compounding industrials, logistics, and equipment names tied to North American capex.",
-    image: "/sectors/industrials.svg",
+    image: "/sectors/industrials.jpg",
     weight: "14%",
     holdings: [
       { ticker: "CNR", name: "Canadian National Railway", region: "Canada" },
@@ -95,7 +96,7 @@ export const sectors: Sector[] = [
     short: "Energy",
     description:
       "Energy producers, midstream, and regulated utilities with attractive free-cash-flow profiles.",
-    image: "/sectors/energy.svg",
+    image: "/sectors/energy.jpg",
     weight: "13%",
     holdings: [
       { ticker: "ENB", name: "Enbridge", region: "Canada" },
@@ -109,7 +110,7 @@ export const sectors: Sector[] = [
     short: "Materials",
     description:
       "Quality miners and materials businesses with disciplined capital allocation.",
-    image: "/sectors/materials.svg",
+    image: "/sectors/materials.jpg",
     weight: "13%",
     holdings: [
       { ticker: "AEM", name: "Agnico Eagle", region: "Canada" },

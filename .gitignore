@@ -36,3 +36,9 @@ yarn-error.log*
 # typescript
 next-env.d.ts
 *.tsbuildinfo
+
+# originals kept beside the site; the optimized copies in public/images are what ship
+/public/images/SIF Team Photos/
+
+# local editor workspaces
+*.code-workspace

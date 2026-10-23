@@ -1,159 +1,133 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import PageHero from "@/components/PageHero";
+import FeatureSection from "@/components/FeatureSection";
 import { fundFacts } from "@/data/metrics";
+import { teamPhoto } from "@/data/team";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "Who We Are",
 };
 
 const pillars = [
-  {
-    title: "Invest",
-    body: "Generate long-term growth of the Fund’s assets in a diversified book of mid-to-large cap Canadian and U.S. issuers.",
-  },
-  {
-    title: "Train",
-    body: "Give SAF students an institutional desk: valuation, pitching, portfolio construction, and performance reporting.",
-  },
-  {
-    title: "Connect",
-    body: "Work with finance faculty, an industry advisory board, and mentors at banks, funds, and pension plans.",
-  },
+  { title: "Invest", description: "Long-term growth through a diversified book", href: "/portfolio" },
+  { title: "Learn", description: "Valuation and portfolio management, hands-on", href: "#how-it-works" },
+  { title: "Connect", description: "Faculty, an advisory board, and industry mentors", href: "/partners" },
 ];
 
+const roles = [
+  { title: "Manage real money", description: "A portfolio of Canadian and U.S. equities" },
+  { title: "Take a seat", description: "Analyst, Portfolio Manager, CEO, or CIO" },
+  { title: "Work as a team", description: "Small peer teams guided by finance professors" },
+  { title: "Learn from mentors", description: "A professional from the financial services industry" },
+  { title: "Research and pitch", description: "Monitor holdings, select equities, write reports" },
+  { title: "Defend and report", description: "Present to faculty and industry, report performance" },
+];
+
+const programs = [
+  { title: "Accounting and Financial Management", description: "AFM" },
+  { title: "Sustainability and Financial Management", description: "SFM" },
+  { title: "Computing and Financial Management", description: "CFM" },
+  { title: "Mathematics / CPA", description: "Math/CPA" },
+  { title: "Biotechnology / CPA", description: "Biotech/CPA" },
+  { title: "Master of Accounting", description: "MAcc" },
+].map((program) => ({ ...program, href: "/apply" }));
+
 const courses = [
-  { code: "AFM 328", name: "Investment Management — Junior Analyst" },
-  { code: "AFM 329", name: "Investment Management — Senior Analyst" },
-  { code: "AFM 428", name: "Investment Management — Junior Portfolio Manager" },
-  { code: "AFM 429", name: "Investment Management — Senior Portfolio Manager" },
+  { title: "AFM 328", description: "Investment Management: Junior Analyst" },
+  { title: "AFM 329", description: "Investment Management: Senior Analyst" },
+  { title: "AFM 428", description: "Investment Management: Junior Portfolio Manager" },
+  { title: "AFM 429", description: "Investment Management: Senior Portfolio Manager" },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <PageHero
-        kicker="About the Fund"
-        title="Built as a classroom. Run as a desk."
-        lede="The Student Investment Fund is the School of Accounting and Finance’s live-capital program. Members manage real money, write research, and sit across from faculty and industry every term."
-      />
+      <section
+        className="photo relative flex min-h-[min(100svh,960px)] items-center bg-navy bg-[center_35%]"
+        style={{ backgroundImage: `url(${teamPhoto.src})` }}
+      >
+        <h1 className="sr-only">Who We Are</h1>
+        <div className="absolute inset-0 bg-black/55" />
+        <p className="relative mx-auto max-w-5xl px-6 pt-20 text-center font-display text-2xl leading-snug text-white sm:text-3xl md:text-[2.75rem] md:leading-[1.25]">
+          Founded in {fundFacts.founded}, SIF is the University of Waterloo&apos;s
+          student-run investment fund. Students manage <em>real capital</em> in
+          Canadian and U.S. equities, turning valuation theory into research,
+          pitches, and portfolio decisions <em>defended</em> in front of faculty
+          and industry.
+        </p>
+      </section>
 
-      <section className="bg-paper text-navy">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-2">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-              History
+      <div>
+        <FeatureSection
+          first
+          label="Our History"
+          title={`Founded in ${fundFacts.founded}.`}
+          subtitle="Built on a single gift."
+          body={
+            <>
+              <p>
+                The seed investment of {fundFacts.seed} was provided by an anonymous
+                external donor in five installments, with the first{" "}
+                {fundFacts.firstInstallment} available for investing in the{" "}
+                {fundFacts.firstTerm} term.
+              </p>
+              <p className="mt-4">
+                The mandate has not changed since: long-term growth of the
+                Fund&apos;s assets through mid-to-large cap Canadian and U.S.
+                equities.
+              </p>
+            </>
+          }
+          cta={{ href: "/team", label: "Meet the Team" }}
+          items={pillars}
+        />
+
+        <FeatureSection
+          id="how-it-works"
+          label="How It Works"
+          title="Real capital."
+          subtitle="Real accountability."
+          body={
+            <p>
+              Members are appointed for a single term and commit at least five
+              hours a week, plus weekly ninety-minute sessions and time for
+              presentations and reports.
             </p>
-            <h2 className="mt-3 font-serif text-4xl">From a seed gift to a standing mandate.</h2>
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-navy/70">
-              <p>
-                An anonymous donor funded the desk with a {fundFacts.seed} seed
-                in five installments. The first {fundFacts.firstInstallment}{" "}
-                was available to invest in {fundFacts.firstTerm}.
-              </p>
-              <p>
-                Since then, SIF has operated as a co-curricular, for-credit
-                experience inside SAF. Students join for a single study term,
-                covering sectors, monitoring the book, and defending new names
-                in front of peers, professors, and practitioners.
-              </p>
-              <p>
-                Participation is limited to study terms so co-op conflicts of
-                interest never sit on the desk.
-              </p>
-            </div>
-          </div>
-          <div className="border border-navy/10 bg-white p-8">
-            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-gold">
-              Eligible programs
+          }
+          cta={{ href: "/portfolio", label: "View the Portfolio" }}
+          items={roles}
+        />
+
+        <FeatureSection
+          label="Who Can Apply"
+          title="Open to SAF students."
+          subtitle="From 2A onward."
+          body={
+            <p>
+              Applicants must have completed or be enrolled in Managerial Finance I
+              (AFM 271 / 273) or Corporate Finance I (AFM 272) when applications
+              are released.
             </p>
-            <ul className="mt-6 space-y-3 text-sm text-navy/80">
-              {[
-                "Accounting and Financial Management",
-                "Sustainability and Financial Management",
-                "Computing and Financial Management",
-                "Mathematics / Chartered Professional Accountancy",
-                "Biotechnology / Chartered Professional Accountancy",
-                "Master of Accounting",
-              ].map((program) => (
-                <li key={program} className="border-b border-navy/10 pb-3 last:border-0">
-                  {program}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
+          }
+          cta={{ href: "/apply", label: "Apply to SIF" }}
+          items={programs}
+        />
 
-      <section className="bg-navy">
-        <div className="mx-auto grid max-w-7xl gap-8 px-6 py-20 md:grid-cols-3">
-          {pillars.map((pillar) => (
-            <article key={pillar.title} className="border border-white/10 p-8">
-              <h3 className="font-serif text-3xl text-gold">{pillar.title}</h3>
-              <p className="mt-4 text-sm leading-relaxed text-cream/70">{pillar.body}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-paper text-navy">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-            How it works
-          </p>
-          <h2 className="mt-3 max-w-3xl font-serif text-4xl">
-            Research, pitch, allocate, report.
-          </h2>
-          <div className="mt-10 grid gap-6 md:grid-cols-2">
-            {[
-              "Manage a portfolio of Canadian and U.S. equities with real money.",
-              "Sit as an Analyst, Portfolio Manager, CEO, or CIO.",
-              "Enroll in one of the Investment Management project courses.",
-              "Work in a small peer team under finance faculty.",
-              "Take a mentor from the financial services industry.",
-              "Monitor sector holdings, write equity research, and defend recommendations.",
-              "Learn Bloomberg, Thomson Reuters, and Capital IQ.",
-              "Measure and report portfolio performance to industry professionals.",
-            ].map((item) => (
-              <p
-                key={item}
-                className="border-l-2 border-gold pl-5 text-sm leading-relaxed text-navy/75"
-              >
-                {item}
-              </p>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white text-navy">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-            For credit
-          </p>
-          <h2 className="mt-3 font-serif text-4xl">Investment Management courses</h2>
-          <p className="mt-4 max-w-2xl text-sm leading-relaxed text-navy/65">
-            Selected students enroll in a 0.25-credit project course with a
-            numerical grade. Enrollment is by instructor authorization, beginning
-            in 2A. All four courses can be completed across an undergraduate
-            program.
-          </p>
-          <div className="mt-10 grid gap-4 md:grid-cols-2">
-            {courses.map((course) => (
-              <div key={course.code} className="flex items-baseline justify-between border border-navy/10 px-6 py-5">
-                <span className="font-serif text-2xl">{course.code}</span>
-                <span className="text-sm text-navy/60">{course.name}</span>
-              </div>
-            ))}
-          </div>
-          <Link
-            href="/apply"
-            className="mt-10 inline-block bg-navy px-7 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream"
-          >
-            Apply for a seat
-          </Link>
-        </div>
-      </section>
+        <FeatureSection
+          id="courses"
+          label="Courses"
+          title="Earn credit."
+          subtitle="Four project courses."
+          body={
+            <p>
+              Selected students enrol in a 0.25-credit project course with a
+              numerical grade, by instructor authorization, and may take all four
+              during their degree.
+            </p>
+          }
+          items={courses}
+          columns={2}
+        />
+      </div>
     </>
   );
 }

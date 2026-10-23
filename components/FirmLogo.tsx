@@ -1,41 +1,49 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import type { Firm } from "@/data/alumni";
 
+/**
+ * Shows /public/logos/<firm.logo> at full colour, scaled to fit the slot.
+ * Until that file exists, the firm name is set in its place.
+ */
 export default function FirmLogo({
   firm,
-  variant = "light",
+  className = "h-20 w-48",
+  style,
 }: {
   firm: Firm;
-  variant?: "light" | "dark";
+  className?: string;
+  style?: CSSProperties;
 }) {
-  const [ok, setOk] = useState(false);
-  const onDark = variant === "dark";
+  const [status, setStatus] = useState<"loading" | "ok" | "missing">("loading");
+  const img = useRef<HTMLImageElement>(null);
+
+  // A cached image can finish before hydration attaches onLoad/onError
+  useEffect(() => {
+    const el = img.current;
+    if (el?.complete) setStatus(el.naturalWidth > 0 ? "ok" : "missing");
+  }, []);
 
   return (
-    <span className="relative flex h-12 w-[10.5rem] items-center justify-center">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={`/logos/${firm.logo}`}
-        alt={firm.name}
-        className={`max-h-10 max-w-[9.5rem] object-contain ${
-          ok ? "opacity-100" : "opacity-0"
-        } ${onDark ? "brightness-0 invert" : "opacity-80 grayscale hover:opacity-100 hover:grayscale-0"}`}
-        onLoad={() => setOk(true)}
-        onError={(event) => {
-          event.currentTarget.style.display = "none";
-        }}
-      />
-      {!ok ? (
-        <span
-          className={`absolute inset-0 flex items-center justify-center px-1 text-center font-serif text-[0.95rem] leading-none tracking-tight whitespace-nowrap ${
-            onDark ? "text-cream/90" : "text-navy/80"
+    <span className={`relative flex items-center justify-center ${className}`} style={style}>
+      {status !== "missing" ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          ref={img}
+          src={`/logos/${firm.logo}`}
+          alt={firm.name}
+          className={`max-h-full max-w-full object-contain ${
+            status === "ok" ? "opacity-100" : "opacity-0"
           }`}
-        >
+          onLoad={() => setStatus("ok")}
+          onError={() => setStatus("missing")}
+        />
+      ) : (
+        <span className="text-center font-display text-xl leading-tight font-medium text-navy">
           {firm.name}
         </span>
-      ) : null}
+      )}
     </span>
   );
 }

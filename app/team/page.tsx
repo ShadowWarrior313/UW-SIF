@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import PageHero from "@/components/PageHero";
-import TeamCard from "@/components/TeamCard";
-import { currentTerm, faculty, team, teamGroups } from "@/data/team";
+import PastTeamsIndex from "@/components/PastTeamsIndex";
+import TeamGroups from "@/components/TeamGroups";
+import TeamPhoto from "@/components/TeamPhoto";
+import { type } from "@/components/type";
+import { pastTeamsByYear } from "@/data/pastTeams";
+import { currentTerm, faculty, team, teamPhoto } from "@/data/team";
 
 export const metadata: Metadata = {
   title: "Team",
@@ -11,45 +15,37 @@ export default function TeamPage() {
   return (
     <>
       <PageHero
-        kicker="Meet the team"
-        title={`${currentTerm} Student Investment Fund`}
-        lede={`${team.length} SAF students covering the book this term — portfolio managers, senior analysts, and junior analysts working a live North American equity mandate.`}
+        title="Meet the Team"
+        lede={`The ${currentTerm} Student Investment Fund: ${team.length} students across portfolio management and research.`}
       />
 
-      <section className="bg-paper text-navy">
-        {teamGroups.map((group) => (
-          <div key={group.id} className="mx-auto max-w-7xl px-6 py-16 first:pt-20 last:pb-20">
-            <div className="flex items-end justify-between border-b border-navy/10 pb-4">
-              <h2 className="font-serif text-3xl">{group.title}</h2>
-              <p className="text-xs uppercase tracking-[0.2em] text-navy/45">
-                {group.members.length} members
-              </p>
-            </div>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {group.members.map((member) => (
-                <TeamCard key={member.name} member={member} />
-              ))}
-            </div>
+      <TeamPhoto {...teamPhoto} />
+
+      <TeamGroups members={team} />
+
+      <section>
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <h2 className={type.h2}>Faculty &amp; Staff</h2>
+          <div className="mt-10 grid border-t border-line md:grid-cols-3">
+            {faculty.map((person) => (
+              <div key={person.name} className="border-b border-line py-6 md:pr-8">
+                <h3 className={type.h3}>{person.name}</h3>
+                <p className="mt-1 font-semibold text-ink">{person.role}</p>
+                <p className="mt-1 text-slate">{person.title}</p>
+              </div>
+            ))}
           </div>
-        ))}
+        </div>
       </section>
 
-      <section className="bg-navy">
-        <div className="mx-auto max-w-7xl px-6 py-20">
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-            Faculty & staff
+      <section id="past-teams">
+        <div className="mx-auto max-w-7xl px-6 py-16 md:py-20">
+          <h2 className={type.h2}>Past Teams</h2>
+          <p className={`mt-5 max-w-2xl ${type.lede}`}>
+            Every SIF cohort since {pastTeamsByYear.at(-1)?.year}, by term.
           </p>
-          <h2 className="mt-3 font-serif text-4xl text-cream">Supervision</h2>
-          <div className="mt-10 grid gap-4 md:grid-cols-3">
-            {faculty.map((person) => (
-              <article key={person.name} className="border border-white/10 p-6">
-                <h3 className="font-serif text-2xl text-cream">{person.name}</h3>
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-gold">
-                  {person.role}
-                </p>
-                <p className="mt-3 text-sm text-cream/60">{person.title}</p>
-              </article>
-            ))}
+          <div className="mt-10">
+            <PastTeamsIndex />
           </div>
         </div>
       </section>

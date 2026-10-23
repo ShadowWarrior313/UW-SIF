@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Inter } from "next/font/google";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { site } from "@/data/nav";
@@ -8,12 +8,6 @@ import "./globals.css";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
-});
-
-const instrument = Instrument_Serif({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-instrument",
 });
 
 export const metadata: Metadata = {
@@ -31,8 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
-      <body className="min-h-screen bg-navy font-sans text-cream antialiased">
+    <html lang="en" className={inter.variable} data-scroll-behavior="smooth">
+      {/* Extensions such as Grammarly add attributes to <body> before React hydrates */}
+      <body className="min-h-screen bg-paper font-sans text-ink antialiased" suppressHydrationWarning>
         <Header />
         <main>{children}</main>
         <Footer />

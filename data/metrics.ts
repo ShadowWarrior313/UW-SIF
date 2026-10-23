@@ -1,3 +1,5 @@
+import { team } from "@/data/team";
+
 /**
  * Fund metrics shown on the homepage.
  * Swap these placeholders when official figures are ready.
@@ -5,17 +7,17 @@
 export const metrics = [
   {
     id: "members",
-    value: 35,
-    display: "35",
+    value: team.length,
+    display: String(team.length),
     label: "Members",
-    hint: "Spring 2026 roster",
+    hint: "Current roster, from data/team.ts",
   },
   {
     id: "aum",
-    value: 1.2,
-    display: "$1.2M",
+    value: 0.88,
+    display: "$880K",
     label: "In Assets",
-    hint: "Placeholder AUM",
+    hint: "Current fund size",
   },
   {
     id: "alpha",

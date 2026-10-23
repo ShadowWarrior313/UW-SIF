@@ -1,27 +1,49 @@
 import type { Member } from "@/data/team";
+import { photoFor } from "@/data/team";
+import SocialIcon from "@/components/SocialIcon";
 
-export default function TeamCard({ member }: { member: Member }) {
+export default function TeamCard({
+  member,
+  term,
+}: {
+  member: Pick<Member, "name" | "role" | "linkedin" | "photo">;
+  /** Past-term slug (e.g. winter-2026) so the headshot resolves to that term's folder */
+  term?: string;
+}) {
   const initials = member.name
     .split(" ")
-    .filter((part) => !part.includes("("))
     .slice(0, 2)
     .map((part) => part[0])
     .join("");
 
   return (
-    <article className="border border-navy/10 bg-white p-6 transition hover:border-gold/50">
-      <div className="flex h-14 w-14 items-center justify-center rounded-full border border-gold/40 bg-cream font-serif text-lg text-navy">
-        {initials}
+    <article>
+      <div className="relative aspect-square overflow-hidden rounded-[3px] bg-mist">
+        <span className="absolute inset-0 flex items-center justify-center font-display text-5xl text-navy/25">
+          {initials}
+        </span>
+        {member.photo === null ? null : (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${photoFor(member, term)})` }}
+          />
+        )}
       </div>
-      <h3 className="mt-5 font-serif text-2xl text-navy">{member.name}</h3>
-      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-        {member.role}
-      </p>
-      <p className="mt-3 text-sm text-navy/60">
-        {member.program}
-        <br />
-        Graduating {member.graduating}
-      </p>
+      <div className="mt-4 flex items-start justify-between gap-3">
+        <div>
+          <h3 className="font-display text-xl leading-tight text-navy">{member.name}</h3>
+          <p className="mt-1 text-sm text-slate">{member.role}</p>
+        </div>
+        {member.linkedin ? (
+          <a
+            href={member.linkedin}
+            aria-label={`${member.name} on LinkedIn`}
+            className="mt-0.5 text-navy/60 transition hover:text-navy"
+          >
+            <SocialIcon name="linkedin" />
+          </a>
+        ) : null}
+      </div>
     </article>
   );
 }

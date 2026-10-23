@@ -1,116 +1,111 @@
-import Link from "next/link";
+import Button from "@/components/Button";
+import FeatureSection from "@/components/FeatureSection";
 import LogoMarquee from "@/components/LogoMarquee";
 import Metrics from "@/components/Metrics";
 import SectorGrid from "@/components/SectorGrid";
-import { fundFacts } from "@/data/metrics";
-import { currentTerm, team } from "@/data/team";
+import { fundFacts, metrics } from "@/data/metrics";
+import { applicationTerm } from "@/data/nav";
+import { teamPhoto } from "@/data/team";
+
+const aum = metrics.find((m) => m.id === "aum")!.display;
 
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate min-h-[100svh] overflow-hidden bg-navy">
-        <div className="hero-grid absolute inset-0" />
-        <div className="grain absolute inset-0" />
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-navy to-transparent" />
-
-        <div className="relative mx-auto flex min-h-[100svh] max-w-7xl flex-col justify-center px-6 pb-24 pt-32">
-          <p className="rise text-xs font-semibold uppercase tracking-[0.32em] text-gold">
+      {/* Full-screen hero: only the photo and its content until you scroll */}
+      <section
+        className="photo relative bg-navy bg-[center_35%]"
+        style={{ backgroundImage: `url(${teamPhoto.src})` }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/45 to-black/20" />
+        <div className="relative mx-auto flex h-svh min-h-[560px] max-w-7xl flex-col justify-end px-6 pb-20 lg:px-8 md:pb-28">
+          <p className="text-sm text-white/75">
             University of Waterloo · School of Accounting and Finance
           </p>
-          <h1 className="rise rise-delay-1 mt-6 max-w-5xl font-serif text-[3.4rem] leading-[0.92] text-cream sm:text-7xl md:text-[5.6rem]">
-            The Student
-            <br />
-            Investment Fund
+          <h1 className="mt-4 max-w-4xl font-display text-[2.75rem] leading-[1.02] font-medium tracking-[-0.035em] text-white md:text-[4.25rem]">
+            Student Investment Fund
           </h1>
-          <p className="rise rise-delay-2 mt-8 max-w-xl text-lg leading-relaxed text-cream/72">
-            {fundFacts.mandate} Members manage a live book, write research, and
-            present to faculty and industry.
+          <p className="mt-5 max-w-lg text-[1.05rem] leading-relaxed text-white/80">
+            Students managing real capital in Canadian and U.S. equities, with
+            guidance from industry professionals and finance faculty.
           </p>
-          <div className="rise rise-delay-3 mt-10 flex flex-wrap gap-4">
-            <Link
-              href="/apply"
-              className="bg-gold px-7 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy transition hover:bg-gold-2"
-            >
+          <div className="mt-10 flex flex-wrap gap-3">
+            <Button href="/about" variant="light">
+              Who We Are
+            </Button>
+            <Button href="/apply" variant="ghost">
               Apply to the Fund
-            </Link>
-            <Link
-              href="/about"
-              className="border border-cream/25 px-7 py-3 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-cream transition hover:border-gold hover:text-gold"
-            >
-              How it works
-            </Link>
+            </Button>
           </div>
         </div>
       </section>
 
       <Metrics />
-      <LogoMarquee />
 
-      <section className="bg-paper text-navy">
-        <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 md:grid-cols-[1.1fr_0.9fr] md:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-              About the mandate
-            </p>
-            <h2 className="mt-3 font-serif text-4xl md:text-5xl">
-              An institutional desk inside SAF.
-            </h2>
-            <p className="mt-6 text-base leading-relaxed text-navy/70">
-              Seeded in {fundFacts.founded} with {fundFacts.seed} from an
-              anonymous donor, SIF is the School of Accounting and Finance&apos;s
-              live-capital program. Students cover sectors, pitch names, and
-              report performance — with Bloomberg, Capital IQ, and faculty
-              supervision behind every recommendation.
-            </p>
-            <Link
-              href="/about"
-              className="mt-8 inline-block text-xs font-semibold uppercase tracking-[0.22em] text-navy underline decoration-gold decoration-2 underline-offset-8"
-            >
-              Read the full story
-            </Link>
-          </div>
-          <div className="grid grid-cols-2 gap-px bg-navy/10">
-            {[
-              ["2012", "Founded"],
-              [String(team.length), `${currentTerm} members`],
-              ["4", "IM course credits"],
-              ["2", "Markets: Canada & U.S."],
-            ].map(([value, label]) => (
-              <div key={label} className="bg-paper px-6 py-8">
-                <p className="font-serif text-4xl">{value}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-navy/50">
-                  {label}
-                </p>
-              </div>
-            ))}
-          </div>
+      <FeatureSection
+        label="The Fund"
+        title="An institutional setting."
+        subtitle="Inside SAF."
+        body={
+          <p>
+            Members cover sectors, defend recommendations, and report performance
+            to faculty and industry professionals, earning credit through four
+            Investment Management courses.
+          </p>
+        }
+        cta={{ href: "/about", label: "How the Fund Works" }}
+        items={[
+          { title: aum, description: `Fund size, from a ${fundFacts.seed} seed in ${fundFacts.firstTerm}` },
+          { title: "4 courses", description: "Investment Management, for credit" },
+          { title: "Canada & U.S.", description: "Mid-to-large cap equities" },
+        ]}
+      />
+
+      <FeatureSection
+        label="Alumni"
+        title="Recruiting success."
+        subtitle="Where members go next."
+        body={
+          <p>
+            Alumni have started their careers at leading banks, asset managers,
+            pension plans, and advisory firms across North America, and stay
+            involved helping current members break into the industry.
+          </p>
+        }
+        cta={{ href: "/alumni", label: "Our Alumni" }}
+      >
+        <div className="-mx-6 lg:-mx-8">
+          <LogoMarquee />
         </div>
-      </section>
+      </FeatureSection>
 
-      <SectorGrid />
+      <FeatureSection
+        label="Coverage"
+        title="Seven sector teams."
+        subtitle="One book."
+        body={
+          <p>
+            Analysts are organised into sector teams that research, pitch, and
+            monitor the names in the portfolio.
+          </p>
+        }
+        cta={{ href: "/portfolio", label: "View the Portfolio" }}
+      >
+        <SectorGrid />
+      </FeatureSection>
 
-      <section className="bg-navy">
-        <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-6 py-20 md:flex-row md:items-center">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
-              Fall 2026 / Winter 2027
-            </p>
-            <h2 className="mt-3 font-serif text-4xl text-cream md:text-5xl">
-              Applications are open.
-            </h2>
-            <p className="mt-4 max-w-xl text-sm leading-relaxed text-cream/65">
-              AFM, CFM, Math/CPA, Biotech/CPA, and SFM students in 2A or later
-              who have completed AFM 271, 272, or 273.
-            </p>
-          </div>
-          <Link
-            href="/apply"
-            className="bg-gold px-8 py-4 text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-navy transition hover:bg-gold-2"
-          >
-            Start an application
-          </Link>
-        </div>
-      </section>
+      <FeatureSection
+        label="Applications"
+        title={`${applicationTerm}.`}
+        subtitle="Applications are open."
+        body={
+          <p>
+            Open to AFM, CFM, SFM, Math/CPA, and Biotech/CPA students in their 2A
+            term or later.
+          </p>
+        }
+        cta={{ href: "/apply", label: "How to Apply" }}
+      />
     </>
   );
 }
